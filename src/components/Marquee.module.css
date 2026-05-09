@@ -1,0 +1,23 @@
+.wrap {
+  background: var(--foreground);
+  color: var(--background);
+  overflow: hidden;
+  padding: 0.65rem 0;
+  white-space: nowrap;
+}
+
+.wrap p {
+  animation: slide 20s linear infinite;
+  display: inline-block;
+  margin: 0;
+  padding-left: 100%;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
