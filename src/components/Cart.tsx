@@ -5,6 +5,8 @@ import { X, Trash2 } from "lucide-react";
 import styles from "./Cart.module.css";
 import { useCart } from "./CartContext";
 
+const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "923000000000";
+
 interface CartProps {
   isOpen: boolean;
   onClose: () => void;
@@ -19,7 +21,7 @@ export default function Cart({ isOpen, onClose }: CartProps) {
     }
 
     const message = createWhatsAppMessage(cart, total);
-    const checkoutUrl = `https://wa.me/923000000000?text=${encodeURIComponent(message)}`;
+    const checkoutUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
     window.open(checkoutUrl, "_blank", "noopener,noreferrer");
     clearCart();

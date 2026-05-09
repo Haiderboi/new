@@ -8,24 +8,29 @@ import styles from "./ProductGrid.module.css";
 
 type CategoryFilter = "all" | "electronics" | "fashion";
 
+const subcategories = {
+  electronics: ["Headphones", "Table Lamps", "Portable Fans"],
+  fashion: ["Lockets", "Bangles"],
+} as const;
+
 const fallbackProducts: Product[] = [
-  { id: "el-1", name: "Wave Pro Headphones", price: 7800, emoji: "🎧", category: "electronics", subcategory: "Headphones" },
-  { id: "el-2", name: "Aura Table Lamp", price: 3200, emoji: "💡", category: "electronics", subcategory: "Table Lamps" },
-  { id: "el-3", name: "Mini Chill Fan", price: 2600, emoji: "🪭", category: "electronics", subcategory: "Portable Fans" },
-  { id: "fa-1", name: "Moon Locket", price: 1900, emoji: "📿", category: "fashion", subcategory: "Lockets" },
-  { id: "fa-2", name: "Classic Bangles", price: 2400, emoji: "💫", category: "fashion", subcategory: "Bangles" },
+  { id: "el-1", name: "Wave Pro Headphones", price: 7800, emoji: "🎧", category: "electronics", subcategory: subcategories.electronics[0] },
+  { id: "el-2", name: "Aura Table Lamp", price: 3200, emoji: "💡", category: "electronics", subcategory: subcategories.electronics[1] },
+  { id: "el-3", name: "Mini Chill Fan", price: 2600, emoji: "🪭", category: "electronics", subcategory: subcategories.electronics[2] },
+  { id: "fa-1", name: "Moon Locket", price: 1900, emoji: "📿", category: "fashion", subcategory: subcategories.fashion[0] },
+  { id: "fa-2", name: "Classic Bangles", price: 2400, emoji: "💫", category: "fashion", subcategory: subcategories.fashion[1] },
 ];
 
 const categoryMap = [
   {
     key: "electronics",
     label: "Electronics",
-    subcategories: ["Headphones", "Table Lamps", "Portable Fans"],
+    subcategories: subcategories.electronics,
   },
   {
     key: "fashion",
     label: "Fashion",
-    subcategories: ["Lockets", "Bangles"],
+    subcategories: subcategories.fashion,
   },
 ] as const;
 
@@ -90,10 +95,11 @@ export default function ProductGrid({ activeCategory, searchQuery, onAddToCart }
             <h2 className={styles.categoryTitle}>{category.label}</h2>
 
             {category.subcategories.map((subcategory) => {
+              const normalizedSubcategory = subcategory.toLowerCase();
               const sectionItems = filteredProducts.filter(
                 (product) =>
                   product.category === category.key &&
-                  product.subcategory.toLowerCase() === subcategory.toLowerCase(),
+                  product.subcategory.toLowerCase() === normalizedSubcategory,
               );
 
               if (sectionItems.length === 0) {
